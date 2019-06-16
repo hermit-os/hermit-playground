@@ -11,7 +11,6 @@ project (HermitCore)
 add_subdirectory(include/hermit)
 
 # Build the HermitCore Rust Kernel and its dependencies.
-add_subdirectory(pci_ids_parser)
 add_subdirectory(librs)
 
 
@@ -33,12 +32,12 @@ if(NOT BOOTSTRAP)
 
 	## Tests and benchmarks
 	build_external(tests ${HERMIT_ROOT}/usr/tests hermit)
-	build_external(openmpbench ${HERMIT_ROOT}/usr/openmpbench hermit)
+	#build_external(openmpbench ${HERMIT_ROOT}/usr/openmpbench hermit)
 
 	# These are currently x86_64-specific
-	if("${HERMIT_ARCH}" STREQUAL "x86_64")
-		build_external(benchmarks ${HERMIT_ROOT}/usr/benchmarks hermit)
-	endif()
+	#if("${HERMIT_ARCH}" STREQUAL "x86_64")
+	#	build_external(benchmarks ${HERMIT_ROOT}/usr/benchmarks hermit)
+	#endif()
 endif()
 
 ## relocate the local prefix to our install destination
@@ -81,7 +80,7 @@ set(CPACK_SYSTEM_NAME all)
 
 set(CPACK_PACKAGE_VERSION_MAJOR 0)
 set(CPACK_PACKAGE_VERSION_MINOR 3)
-set(CPACK_PACKAGE_VERSION_PATCH 6)
+set(CPACK_PACKAGE_VERSION_PATCH 7)
 
 set(CPACK_PACKAGE_CONTACT "Stefan Lankes <slankes@eonerc.rwth-aachen.de>")
 
