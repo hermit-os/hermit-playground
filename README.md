@@ -18,7 +18,7 @@ __We decided to develop a version of the kernel in [Rust](https://www.rust-lang.
 We promise that this will make it easier to maintain and extend our kernel.
 All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).__
 
-__This repository contains the Rust-based version of HermitCore.
+__This repository contains the Rust-based playground for HermitCore.
 Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit).
 However, it is a starting point and runs within a hypervisor.
 The multi-kernel approach has not yet been tested in it.__
@@ -121,7 +121,7 @@ Otherwise, the proxy must be started directly and needs the path to the HermitCo
 $ /opt/hermit/bin/proxy /opt/hermit/x86_64-hermit/extra/tests/hello
 ```
 
-Afterwards, the proxy starts the HermitCore application within a VM.
+Afterwards, the proxy starts the HermitCore application within a VM (and later bare-metal on a NUMA node)
 
 ## Testing
 
@@ -132,13 +132,12 @@ virtual machine:
 $ cd build
 $ make install DESTDIR=~/hermit-build
 $ cd ~/hermit-build/opt/hermit
-$ # using QEMU
 $ bin/proxy x86_64-hermit/extra/tests/hello
 ```
 
 The application will be started within our thin
 hypervisor _uhyve_ powered by Linux's KVM API and therefore requires *KVM* support.
-In principle, it is an extension of [ukvm](https://www.usenix.org/sites/default/files/conference/protected-files/hotcloud16_slides_williams.pdf).
+In principle, it is an extension of [ukvm](https://www.usenix.org/sites/default/files/conference/protected-files/hotcloud16_slides_williams.pdf) and part of our proxy.
 
 The environment variable `HERMIT_CPUS` specifies the number of
 CPUs (and no longer a range of core ids). Furthermore, the variable `HERMIT_MEM`
@@ -174,11 +173,6 @@ and enables the network support:
 ```bash
 $ HERMIT_ISLE=uhyve HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HERMIT_NETIF=tap100 bin/proxy x86_64-hermit/extra/tests/hello
 ```
-
-### As multi-kernel on a real machine
-
-*Coming soon...*
-
 
 ## Building your own HermitCore applications
 
