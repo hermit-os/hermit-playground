@@ -3,7 +3,7 @@
 
 # HermitCore-rs - A Rust-based, lightweight unikernel for a scalable and predictable runtime behavior
 
-[![Build Status](https://travis-ci.org/hermitcore/libhermit-rs.svg?branch=master)](https://travis-ci.org/hermitcore/libhermit-rs)
+[![Build Status](https://travis-ci.org/hermitcore/hermit-playground.svg?branch=master)](https://travis-ci.org/hermitcore/hermit-playground)
 [![Slack Status](https://radiant-ridge-95061.herokuapp.com/badge.svg)](https://radiant-ridge-95061.herokuapp.com)
 
 [HermitCore]( http://www.hermitcore.org ) is a new
@@ -14,12 +14,12 @@ approach (like
 unikernel features for a better programmability and scalability for hierarchical
 systems.
 
-__We decided to develop a version of the kernel in [Rust](https://www.rust-lang.org) called *HermitCore-rs*.
+__We decided to develop a version of the kernel in [Rust](https://www.rust-lang.org) .
 We promise that this will make it easier to maintain and extend our kernel.
 All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).__
 
 __This repository contains the Rust-based version of HermitCore.
-Currently, it does not support all features of the [C-based version](https://github.com/hermitcore/libhermit).
+Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit).
 However, it is a starting point and runs within a hypervisor.
 The multi-kernel approach has not yet been tested in it.__
 
@@ -53,11 +53,6 @@ If you want to build the toolchain yourself, have a look at the `path2rs` branch
 [hermit-toolchain](https://github.com/hermitcore/hermit-toolchain).
 It contains scripts to build the whole toolchain for HermitCore-rs.
 
-Depending on how you want to use HermitCore-rs, you might need additional packages
-such as:
-
- * QEMU (`apt-get install qemu-system-x86`)
-
 ## Building
 
 ### Preliminary work
@@ -65,8 +60,8 @@ such as:
 As a first step, the repository and its submodules have to be cloned:
 
 ```bash
-$ git clone git@github.com:hermitcore/libhermit-rs.git
-$ cd libhermit-rs
+$ git clone git@github.com:hermitcore/hermit-playground.git
+$ cd hermit-playground
 $ git submodule init
 $ git submodule update
 ```
@@ -123,15 +118,12 @@ $ /opt/hermit/x86_64-hermit/extra/tests/hello
 
 Otherwise, the proxy must be started directly and needs the path to the HermitCore application as an argument:
 ```bash
-$ # using QEMU
-$ HERMIT_ISLE=qemu /opt/hermit/bin/proxy /opt/hermit/x86_64-hermit/extra/tests/hello
+$ /opt/hermit/bin/proxy /opt/hermit/x86_64-hermit/extra/tests/hello
 ```
 
-Afterwards, the proxy starts the HermitCore application within a VM or bare-metal on a NUMA node.
+Afterwards, the proxy starts the HermitCore application within a VM.
 
 ## Testing
-
-### As classical standalone unikernel within a virtual machine
 
 HermitCore applications can be directly started as a standalone kernel within a
 virtual machine:
@@ -141,21 +133,14 @@ $ cd build
 $ make install DESTDIR=~/hermit-build
 $ cd ~/hermit-build/opt/hermit
 $ # using QEMU
-$ HERMIT_ISLE=qemu bin/proxy x86_64-hermit/extra/tests/hello
-$ # using uHyve
-$ HERMIT_ISLE=uhyve bin/proxy x86_64-hermit/extra/tests/hello
+$ bin/proxy x86_64-hermit/extra/tests/hello
 ```
 
-With `HERMIT_ISLE=qemu`, the application will be started within a QEMU VM.
-Please note that the loader requires QEMU and uses *KVM* by default.
-Furthermore, it expects that the executable is called `qemu-system-x86_64`.
-
-With `HERMIT_ISLE=uhyve`, the application will be started within a thin
-hypervisor powered by Linux's KVM API and therefore requires *KVM* support.
-uhyve has a considerably smaller startup time than QEMU.
+The application will be started within our thin
+hypervisor _uhyve_ powered by Linux's KVM API and therefore requires *KVM* support.
 In principle, it is an extension of [ukvm](https://www.usenix.org/sites/default/files/conference/protected-files/hotcloud16_slides_williams.pdf).
 
-In this context, the environment variable `HERMIT_CPUS` specifies the number of
+The environment variable `HERMIT_CPUS` specifies the number of
 CPUs (and no longer a range of core ids). Furthermore, the variable `HERMIT_MEM`
 defines the memory size of the virtual machine. The suffixes *M* and *G* can be
 used to specify a value in megabytes or gigabytes respectively. By default, the
@@ -164,7 +149,7 @@ For instance, the following command starts the stream benchmark in a virtual mac
 has 4 cores and 6GB memory:
 
 ```bash
-$ HERMIT_ISLE=qemu HERMIT_CPUS=4 HERMIT_MEM=6G bin/proxy x86_64-hermit/extra/benchmarks/stream
+$ HERMIT_CPUS=4 HERMIT_MEM=6G bin/proxy x86_64-hermit/extra/benchmarks/stream
 ```
 
 To enable an Ethernet device for `uhyve`, we have to setup a tap device on the
@@ -190,11 +175,6 @@ and enables the network support:
 $ HERMIT_ISLE=uhyve HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HERMIT_NETIF=tap100 bin/proxy x86_64-hermit/extra/tests/hello
 ```
 
-If `qemu` is used as hyervisor, the virtual machine emulates an RTL8139 Ethernet interface and opens at least one TCP/IP port.
-It is used for the communication between the HermitCore application and its proxy.
-Using the environment variable `HERMIT_PORT`, the default communication port (18766) can be changed.
-
-
 ### As multi-kernel on a real machine
 
 *Coming soon...*
@@ -208,57 +188,12 @@ that is required is that you include
 `CMakeLists.txt`. It doesn't have to reside inside the HermitCore repository.
 Other than that, it should behave like normal CMake.
 
-
-## Debugging
-
-If the application is started via `make qemu`, debugging via GDB is enabled by
-default on port 1234. When run via proxy (`HERMIT_ISLE=qemu`), set
-`HERMIT_DEBUG=1`.
-
-```
-$ gdb x86_64-hermit/extra/tests/hello
-(gdb) target extended-remote :1234
-Remote debugging using :1234
-0xffffffff8100b542 in ?? ()
-```
-
 ## Tips
-
-### Optimization
-
-You can configure the `-mtune=name` compiler flag by adding `-DMTUNE=name` to
-the `cmake` command when configuring the project.
-
-Please note, if the applications is started within a VM, the hypervisor has to
-support the specified architecture name.
-
-If QEMU is started by our proxy and the environment variable `HERMIT_KVM` is set
-to `0`, the virtual machine will not be accelerated by KVM. In this case, the
-`-mtune` flag should be avoided.
-
-### TCP connections
-
-Using the environment variable `HERMIT_APP_PORT`, an additional port can be opened
-to establish a TCP/IP connection with your application.
 
 ### Dumping the kernel log
 
 By setting the environment variable `HERMIT_VERBOSE` to `1`, the proxy prints
 the kernel log messages to the screen at termination.
-
-### Network tracing
-
-By setting the environment variable `HERMIT_CAPTURE_NET` to `1` and
-`HERMIT_ISLE` to `qemu`, QEMU captures the network traffic and creates the trace
-file *qemu-vlan0.pcap*. You can analyze the file with e.g.
-[Wireshark](https://www.wireshark.org).
-
-### Monitor
-
-If `HERMIT_MONITOR` is set to `1` and `HERMIT_ISLE` to `qemu`, QEMU establishes
-a monitor which is available via telnet at port 18767.
-Using the environment variable `HERMIT_PORT`, the default port (18766) can be changed for the communication between the HermitCore application and its proxy.
-The connection to the system monitor is automatically set to `HERMIT_PORT+1`, i.e., the default port is 18767.
 
 ## Credits
 
@@ -277,5 +212,5 @@ at your option.
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
 
-HermitCore-rs is being developed on [GitHub](https://github.com/hermitcore/libhermit-rs).
+HermitCore-rs is being developed on [GitHub](https://github.com/hermitcore/hermit-playground).
 Create your own fork, send us a pull request, and chat with us on [Slack](https://radiant-ridge-95061.herokuapp.com)
