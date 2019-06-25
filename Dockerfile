@@ -4,6 +4,7 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update Software repository
+RUN apt-get clean 
 RUN apt-get -qq update
 
 # Install required packets from ubuntu repository
