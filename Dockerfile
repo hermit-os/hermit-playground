@@ -24,11 +24,10 @@ RUN git clone --depth 1 -b hermit https://github.com/hermitcore/rust.git
 RUN wget https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/raw/devel/target/config.toml
 RUN mv config.toml rust
 RUN cd rust && ./x.py install
-RUN rm -rf rust
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install cargo-xbuild
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/objmv.git
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
 
 ENV PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}"
-ENV XARGO_RUST_SRC="/root/.cargo"
+ENV XARGO_RUST_SRC="/rust/src"
 ENV EDITOR=vim
