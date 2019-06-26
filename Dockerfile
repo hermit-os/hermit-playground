@@ -27,6 +27,7 @@ RUN cd rust && ./x.py install
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install cargo-xbuild
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/objmv.git
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
+RUN rm -rf rust/build
 
 ENV PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}"
 ENV XARGO_RUST_SRC="/rust/src"
