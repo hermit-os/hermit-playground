@@ -30,4 +30,5 @@ RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo insta
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
 
 ENV PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}"
+ENV XARGO_RUST_SRC="/root/.cargo"
 ENV EDITOR=vim
