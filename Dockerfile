@@ -25,11 +25,9 @@ RUN wget https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/raw/
 RUN mv config.toml rust
 RUN cd rust && ./x.py install
 RUN rm -rf rust
-#RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
-RUN /root/.cargo/bin/cargo install cargo-xbuild
-#RUN /root/.cargo/bin/rustup component add rust-src
-RUN /root/.cargo/bin/cargo install --git https://github.com/hermitcore/objmv.git
-RUN /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
+RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install cargo-xbuild
+RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/objmv.git
+RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
 
 ENV PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}"
 ENV EDITOR=vim
