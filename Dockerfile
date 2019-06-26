@@ -8,7 +8,7 @@ RUN apt-get clean
 RUN apt-get -qq update
 
 # Install required packets from ubuntu repository
-RUN apt-get install -y apt-transport-https curl wget vim git binutils autoconf automake make cmake qemu-kvm qemu-system-x86 nasm gcc g++ build-essential libtool bsdmainutils
+RUN apt-get install -y apt-transport-https curl wget vim git binutils autoconf automake make cmake qemu-kvm qemu-system-x86 nasm gcc g++ build-essential libtool bsdmainutils python
 
 # add path to hermitcore packets
 RUN echo "deb [trusted=yes] https://dl.bintray.com/hermitcore/ubuntu bionic main" | tee -a /etc/apt/sources.list
@@ -20,9 +20,14 @@ RUN apt-get -qq update
 RUN apt-get install -y --allow-unauthenticated binutils-hermit newlib-hermit-rs pte-hermit-rs gcc-hermit-rs libhermit-rs libomp-hermit-rs
 
 # Install Rust toolchain
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+RUN git clone --depth 1 -b hermit https://github.com/hermitcore/rust.git
+RUN wget https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/raw/devel/target/config.toml
+RUN mv config.toml rust
+RUN cd rust && ./x.py install
+RUN rm -rf rust
+#RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
 RUN /root/.cargo/bin/cargo install cargo-xbuild
-RUN /root/.cargo/bin/rustup component add rust-src
+#RUN /root/.cargo/bin/rustup component add rust-src
 RUN /root/.cargo/bin/cargo install --git https://github.com/hermitcore/objmv.git
 RUN /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
 
