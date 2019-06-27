@@ -51,7 +51,7 @@ test:
     - cd -
     - cd usr/rust
     - cargo build --target x86_64-unknown-hermit
-    - HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=1 HERMIT_VERBOSE=1 ../../local_prefix/opt/hermit/bin/proxy ./target/x86_64-unknown-hermit/debug/hctests
+    - HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=1 HERMIT_VERBOSE=1 ../../build/local_prefix/opt/hermit/bin/proxy ./target/x86_64-unknown-hermit/debug/hctests
   image: ${IMAGE}
   tags:
     - docker
