@@ -1,4 +1,4 @@
-FROM rwthos/hermitcore-rs
+FROM rwthos/hermitcore-rs:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
