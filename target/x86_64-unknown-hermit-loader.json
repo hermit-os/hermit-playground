@@ -1,5 +1,7 @@
 {
     "llvm-target": "x86_64-unknown-none",
+    "linker-flavor": "ld.lld",
+    "linker": "lld",
     "target-endian": "little",
     "target-pointer-width": "64",
     "target-c-int-width": "32",
@@ -10,7 +12,5 @@
     "disable-redzone": true,
     "eliminate-frame-pointer": true,
     "executables": true,
-    "linker-flavor": "ld.lld",
-    "linker": "rust-lld",
     "panic-strategy": "abort"
 }

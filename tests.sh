@@ -6,7 +6,7 @@ OS_VERSION=$2
 export DEBIAN_FRONTEND="noninteractive"
 
 apt-get -qq update || exit 1
-apt-get install -y --no-install-recommends binutils bsdmainutils ca-certificates cmake curl gcc git libc-dev make nasm qemu-system-x86 rpm || exit 1
+apt-get install -y --no-install-recommends binutils bsdmainutils ca-certificates cmake curl gcc git libc-dev make nasm qemu-system-x86 lld rpm || exit 1
 
 echo "deb [trusted=yes] http://dl.bintray.com/hermitcore/ubuntu bionic main" >> /etc/apt/sources.list
 apt-get -qq update || exit 1
@@ -27,7 +27,7 @@ make -j1 package || exit 1
 
 cd ..
 mkdir -p tmp
-dpkg-deb -R build/libhermit-rs-0.3.8-all.deb tmp || exit 1
+dpkg-deb -R build/libhermit-rs-0.3.9-all.deb tmp || exit 1
 rm -rf build/*.deb build/_CPack_Packages
 
 #TDIR=/work/build/local_prefix/opt/hermit/x86_64-hermit/extra

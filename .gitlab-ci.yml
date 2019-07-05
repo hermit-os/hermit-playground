@@ -1,5 +1,5 @@
 variables:
-  IMAGE: ubuntu:with-hermitcore
+  IMAGE: ubuntu:hermitcore-with-xbuild
   GIT_SUBMODULE_STRATEGY: normal
 
 stages:
@@ -41,13 +41,17 @@ build:
 test:
   stage: test
   script:
-    - lscpu
     - cd build
     - export TDIR=./local_prefix/opt/hermit/x86_64-hermit/extra
     - export FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/jacobi"
     - export PROXY=./local_prefix/opt/hermit/bin/proxy
     - for f in $FILES; do echo "check $f..."; HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=1 HERMIT_VERBOSE=1 timeout --kill-after=5m 5m $PROXY $f || exit 1; done
     - for f in $FILES; do echo "check $f..."; HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=2 HERMIT_VERBOSE=1 timeout --kill-after=5m 5m $PROXY $f || exit 1; done
+    - cp ./local_prefix/opt/hermit/x86_64-hermit/lib/libhermit.a /opt/hermit/x86_64-hermit/lib/
+    - cd -
+    - cd usr/rust
+    - cargo build --target x86_64-unknown-hermit
+    - HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=1 HERMIT_VERBOSE=1 ../../build/local_prefix/opt/hermit/bin/proxy ./target/x86_64-unknown-hermit/debug/hctests
   image: ${IMAGE}
   tags:
     - docker
