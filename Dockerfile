@@ -10,4 +10,4 @@ RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo insta
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/objmv.git
 RUN PATH="/opt/hermit/bin:/root/.cargo/bin:${PATH}" /root/.cargo/bin/cargo install --git https://github.com/hermitcore/pci_ids_parser.git
 
-ENV XARGO_RUST_SRC="/src/rust/src"
+ENV XARGO_RUST_SRC="/root/.cargo/lib/rustlib/src/rust/src/"
