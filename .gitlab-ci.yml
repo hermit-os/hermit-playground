@@ -1,5 +1,5 @@
 variables:
-  IMAGE: ubuntu:with-hermitcore
+  IMAGE: ubuntu:with-hermitcore-xbuild
   GIT_SUBMODULE_STRATEGY: normal
 
 stages:
