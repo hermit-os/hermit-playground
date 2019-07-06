@@ -1,0 +1,7 @@
+{
+    "search.exclude": {
+        "**/target": true
+        "build": true
+    },
+    "lldb.verboseLogging": true
+}
