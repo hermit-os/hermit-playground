@@ -3,5 +3,6 @@
         "**/target": true
         "build": true
     },
-    "lldb.verboseLogging": true
+    "lldb.verboseLogging": true,
+    "rust-client.disableRustup": true
 }
