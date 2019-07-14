@@ -120,8 +120,8 @@ fn test_result(result: Result<()>) -> &'static str {
 
 fn main() {
 	println!("Test {} ... {}", stringify!(hello), test_result(hello()));
-	//println!("Test {} ... {}", stringify!(read_file), test_result(read_file()));
-	//println!("Test {} ... {}", stringify!(create_file), test_result(create_file()));
+	println!("Test {} ... {}", stringify!(read_file), test_result(read_file()));
+	println!("Test {} ... {}", stringify!(create_file), test_result(create_file()));
 	println!("Test {} ... {}", stringify!(threading), test_result(threading()));
 	println!("Test {} ... {}", stringify!(pi_sequential), test_result(pi_sequential(50000000)));
 	println!("Test {} ... {}", stringify!(pi_parallel), test_result(pi_parallel(2, 50000000)));
