@@ -75,9 +75,15 @@ fn create_file() -> Result<()> {
 		file.write_all(b"Hello, world!").unwrap();
 	}
 
-	let mut file = File::open("/tmp/foo.txt").unwrap();
-	let mut contents = String::new();
-	file.read_to_string(&mut contents).unwrap();
+	let contents = {
+		let mut file = File::open("/tmp/foo.txt").unwrap();
+		let mut contents = String::new();
+		file.read_to_string(&mut contents).unwrap();
+		contents
+	};
+
+	// delete temporary file
+	std::fs::remove_file("/tmp/foo.txt").unwrap();
 
 	if contents == "Hello, world!" {
 		Ok(())
