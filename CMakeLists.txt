@@ -34,9 +34,9 @@ if(NOT BOOTSTRAP)
 	#build_external(openmpbench ${HERMIT_ROOT}/usr/openmpbench hermit)
 
 	# These are currently x86_64-specific
-	#if("${HERMIT_ARCH}" STREQUAL "x86_64")
-	#	build_external(benchmarks ${HERMIT_ROOT}/usr/benchmarks hermit)
-	#endif()
+	if("${HERMIT_ARCH}" STREQUAL "x86_64")
+		build_external(benchmarks ${HERMIT_ROOT}/usr/benchmarks hermit)
+	endif()
 endif()
 
 ## relocate the local prefix to our install destination

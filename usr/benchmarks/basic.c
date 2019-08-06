@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sched.h>
+#include <pthread.h>
 #ifndef __hermit__
 #include <sys/syscall.h>
 
@@ -34,17 +35,17 @@ static inline long mygetpid(void)
 int sched_yield(void);
 #endif
 
-#define N		10000
+#define N		10000000
 #define M		(256+1)
 #define BUFFSZ		(1ULL*1024ULL*1024ULL)
 
 static char* buff[M];
 
-#if 1
+#if 0
 inline static unsigned long long rdtsc(void)
 {
 	unsigned long lo, hi;
-	asm volatile ("rdtsc" : "=a"(lo), "=d"(hi) :: "memory");
+	asm volatile ("lfence; rdtsc; lfence" : "=a"(lo), "=d"(hi) :: "memory");
 	return ((unsigned long long) hi << 32ULL | (unsigned long long) lo);
 }
 #else
@@ -53,18 +54,27 @@ inline static unsigned long long rdtsc(void)
 	unsigned int lo, hi;
 	unsigned int id;
 
-	asm volatile ("rdtscp" : "=a"(lo), "=c"(id), "=d"(hi));
+	asm volatile ("rdtscp; lfence" : "=a"(lo), "=c"(id), "=d"(hi));
 
 	return ((unsigned long long)hi << 32ULL | (unsigned long long)lo);
 }
 #endif
 
+static volatile unsigned long long thr_tick = 0;
+
+static void* thread_func(void* arg)
+{
+	thr_tick = rdtsc();
+	return NULL;
+}
+
 int main(int argc, char** argv)
 {
 	long i, j, ret;
-	unsigned long long start, end;
+	unsigned long long sum, start, end;
 	const char str[] = "H";
 	size_t len = strlen(str);
+	pthread_t thr_handle;
 
 	printf("Determine systems performance\n");
 	printf("=============================\n");
@@ -91,6 +101,19 @@ int main(int argc, char** argv)
 
 	printf("Average time for sched_yield: %lld cycles\n", (end - start) / N);
 
+	sum = 0;
+	for(i=0; i<1000; i++) {
+		start = rdtsc();
+		pthread_create(&thr_handle, NULL, thread_func, NULL);
+		sched_yield();
+		pthread_join(thr_handle, &start);
+		sum += rdtsc() - thr_tick;
+
+	}
+
+	printf("Average time to create a thread: %lld cycles\n", sum / 1000);
+
+#if 0
 	// cache warm-up
 	buff[0] = (char*) malloc(BUFFSZ);
 
@@ -112,6 +135,7 @@ int main(int argc, char** argv)
 	end = rdtsc();
 
 	printf("Average time for the first page access: %lld cycles\n", (end - start) / ((M-1)*BUFFSZ/4096));
+#endif
 
 #if 0
 	write(2, (const void *)str, len);
