@@ -4,6 +4,7 @@ include(../../cmake/HermitCore-Application.cmake)
 project(hermit_benchmarks C)
 
 add_executable(basic basic.c)
+target_compile_options(basic PRIVATE -pthread)
 target_link_libraries(basic pthread)
 
 add_executable(hg hg.c hist.c rdtsc.c run.c init.c opt.c report.c setup.c)

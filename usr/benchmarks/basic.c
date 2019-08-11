@@ -33,6 +33,8 @@ static inline long mygetpid(void)
 }
 
 int sched_yield(void);
+
+#define PAGE_SIZE (4ULL*1024ULL)
 #endif
 
 #define N		10000000
@@ -60,12 +62,9 @@ inline static unsigned long long rdtsc(void)
 }
 #endif
 
-static volatile unsigned long long thr_tick = 0;
-
 static void* thread_func(void* arg)
 {
-	thr_tick = rdtsc();
-	return NULL;
+	return (void*) rdtsc();
 }
 
 int main(int argc, char** argv)
@@ -73,7 +72,7 @@ int main(int argc, char** argv)
 	long i, j, ret;
 	unsigned long long sum, start, end;
 	const char str[] = "H";
-	size_t len = strlen(str);
+	const size_t len = strlen(str);
 	pthread_t thr_handle;
 
 	printf("Determine systems performance\n");
@@ -102,40 +101,16 @@ int main(int argc, char** argv)
 	printf("Average time for sched_yield: %lld cycles\n", (end - start) / N);
 
 	sum = 0;
-	for(i=0; i<1000; i++) {
+	for(i=0; i<10000; i++) {
 		start = rdtsc();
 		pthread_create(&thr_handle, NULL, thread_func, NULL);
 		sched_yield();
-		pthread_join(thr_handle, &start);
-		sum += rdtsc() - thr_tick;
+		pthread_join(thr_handle, (void**)&start);
+		sum += rdtsc() - start;
 
 	}
 
-	printf("Average time to create a thread: %lld cycles\n", sum / 1000);
-
-#if 0
-	// cache warm-up
-	buff[0] = (char*) malloc(BUFFSZ);
-
-	start = rdtsc();
-	for(i=1; i<M; i++)
-		buff[i] = (char*) malloc(BUFFSZ);
-	end = rdtsc();
-
-	printf("Average time for malloc: %lld cycles\n", (end - start) / (M-1));
-
-	// cache warm-up
-	for(j=0; j<BUFFSZ; j+=4096)
-		buff[0][j] = '1';
-
-	start = rdtsc();
-	for(i=1; i<M; i++)
-		for(j=0; j<BUFFSZ; j+=4096)
-			buff[i][j] = '1';
-	end = rdtsc();
-
-	printf("Average time for the first page access: %lld cycles\n", (end - start) / ((M-1)*BUFFSZ/4096));
-#endif
+	printf("Average time to create a thread: %lld cycles\n", sum / 10000);
 
 #if 0
 	write(2, (const void *)str, len);
