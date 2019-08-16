@@ -3,7 +3,7 @@
 
 # HermitCore-rs - A Rust-based, lightweight unikernel for a scalable and predictable runtime behavior
 
-[![Build Status](https://travis-ci.org/hermitcore/hermit-playground.svg?branch=master)](https://travis-ci.org/hermitcore/hermit-playground)
+[![Build Status](https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/badges/master/pipeline.svg)](https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/pipelines)
 [![Slack Status](https://radiant-ridge-95061.herokuapp.com/badge.svg)](https://radiant-ridge-95061.herokuapp.com)
 
 [HermitCore]( http://www.hermitcore.org ) is a new
