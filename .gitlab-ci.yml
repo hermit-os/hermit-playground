@@ -43,7 +43,7 @@ test:
   script:
     - cd build
     - export TDIR=./local_prefix/opt/hermit/x86_64-hermit/extra
-    - export FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/jacobi $TDIR/tests/thr_hello" #$TDIR/tests/test-malloc $TDIR/tests/test-malloc-mt"
+    - export FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/jacobi $TDIR/tests/thr_hello $TDIR/benchmarks/stream" #$TDIR/tests/test-malloc $TDIR/tests/test-malloc-mt"
     - export PROXY=./local_prefix/opt/hermit/bin/proxy
     - for f in $FILES; do echo "check $f..."; HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=1 HERMIT_VERBOSE=1 timeout --kill-after=5m 5m $PROXY $f || exit 1; done
     - for f in $FILES; do echo "check $f..."; HERMIT_ISLE=uhyve HERMIT_MEM=128M HERMIT_CPUS=2 HERMIT_VERBOSE=1 timeout --kill-after=5m 5m $PROXY $f || exit 1; done
