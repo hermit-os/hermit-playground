@@ -8,20 +8,15 @@
 
 [HermitCore]( http://www.hermitcore.org ) is a new
 [unikernel](http://unikernel.org) targeting a scalable and predictable runtime
-for high-performance and cloud computing. HermitCore extends the multi-kernel
-approach (like
-[McKernel](https://www-sys-aics.riken.jp/ResearchTopics/os/mckernel/)) with
-unikernel features for a better programmability and scalability for hierarchical
-systems.
-
-__We decided to develop a version of the kernel in [Rust](https://www.rust-lang.org) .
+for high-performance and cloud computing.
+We decided to develop a version of the kernel in [Rust](https://www.rust-lang.org) .
 We promise that this will make it easier to maintain and extend our kernel.
-All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).__
+All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).
 
-__This repository contains the Rust-based playground for HermitCore.
+This repository contains the Rust-based playground for HermitCore.
 Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit).
 However, it is a starting point and runs within a hypervisor.
-The multi-kernel approach has not yet been tested in it.__
+The multi-kernel approach has not yet been tested in it.
 
 ## Requirements
 
@@ -33,7 +28,6 @@ the HermitCore-rs kernel and applications you need:
  * Recent host compiler such as GCC
  * HermitCore cross-toolchain, i.e. Binutils, GCC, newlib, pthreads
  * [Rust compiler (nightly release)](https://www.rust-lang.org/en-US/install.html)
- * [pci_ids_parser](https://github.com/hermitcore/pci_ids_parser), which can be install with `cargo install --git https://github.com/hermitcore/pci_ids_parser.git`
  * [cargo-xbuild](https://github.com/rust-osdev/cargo-xbuild), which can be installed with `cargo install cargo-xbuild`
  * Rust source code for cross-compiling, which can be installed with `rustup component add rust-src`.
 
