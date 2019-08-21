@@ -12,11 +12,10 @@ for high-performance and cloud computing.
 We decided to develop a new version of the kernel in [Rust](https://www.rust-lang.org) .
 We promise that this will make it easier to maintain and extend our kernel.
 All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).
+If you want to develope pure Rust applications, please look into [RustyHermit](https://github.com/hermitcore/libhermit-rs).
 
-This repository contains the Rust-based playground for HermitCore.
-Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit).
-However, it is a starting point and runs within a hypervisor.
-The multi-kernel approach has not yet been tested in it.
+This repository contains the Rust-based playground for C/C++/Go/Fortran applications.
+Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit) and runs only in our own hypervisor.
 
 ## Requirements
 
@@ -24,7 +23,6 @@ The build process works currently only on **x86-based Linux** systems. To build
 the HermitCore-rs kernel and applications you need:
 
  * CMake
- * Netwide Assember (NASM)
  * Recent host compiler such as GCC
  * HermitCore cross-toolchain, i.e. Binutils, GCC, newlib, pthreads
  * [Rust compiler (nightly release)](https://www.rust-lang.org/en-US/install.html)
