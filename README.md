@@ -9,14 +9,13 @@
 [HermitCore]( http://www.hermitcore.org ) is a new
 [unikernel](http://unikernel.org) targeting a scalable and predictable runtime
 for high-performance and cloud computing.
-We decided to develop a version of the kernel in [Rust](https://www.rust-lang.org) .
+We decided to develop a new version of the kernel in [Rust](https://www.rust-lang.org) .
 We promise that this will make it easier to maintain and extend our kernel.
 All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).
+If you want to develope pure Rust applications, please look into [RustyHermit](https://github.com/hermitcore/libhermit-rs).
 
-This repository contains the Rust-based playground for HermitCore.
-Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit).
-However, it is a starting point and runs within a hypervisor.
-The multi-kernel approach has not yet been tested in it.
+This repository contains the Rust-based playground for C/C++/Go/Fortran applications.
+Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit) and runs only in our own hypervisor.
 
 ## Requirements
 
@@ -24,7 +23,6 @@ The build process works currently only on **x86-based Linux** systems. To build
 the HermitCore-rs kernel and applications you need:
 
  * CMake
- * Netwide Assember (NASM)
  * Recent host compiler such as GCC
  * HermitCore cross-toolchain, i.e. Binutils, GCC, newlib, pthreads
  * [Rust compiler (nightly release)](https://www.rust-lang.org/en-US/install.html)
@@ -95,7 +93,7 @@ by the toolchain (e.g. `/opt/hermit/x86_64-hermit/lib/libhermit.a`).
 ## Proxy
 
 Part of HermitCore is a small helper tool, which is called *proxy*.
-This tool helps to start HermitCore applications within a virtual machine or bare-metal on a NUMA node.
+This tool helps to start HermitCore applications within a virtual machine.
 In principle it is a bridge to the Linux system.
 If the proxy is registered as loader to the Linux system, HermitCore applications can be started like common Linux applications.
 The proxy can be registered with the following command:
@@ -181,6 +179,11 @@ Other than that, it should behave like normal CMake.
 
 By setting the environment variable `HERMIT_VERBOSE` to `1`, the proxy prints
 the kernel log messages to the screen at termination.
+
+## Missing features
+(might be comming)
+* Multikernel support
+* Running baremetal/without hypervisor
 
 ## Credits
 
