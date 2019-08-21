@@ -9,7 +9,7 @@
 [HermitCore]( http://www.hermitcore.org ) is a new
 [unikernel](http://unikernel.org) targeting a scalable and predictable runtime
 for high-performance and cloud computing.
-We decided to develop a version of the kernel in [Rust](https://www.rust-lang.org) .
+We decided to develop a new version of the kernel in [Rust](https://www.rust-lang.org) .
 We promise that this will make it easier to maintain and extend our kernel.
 All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).
 
@@ -95,7 +95,7 @@ by the toolchain (e.g. `/opt/hermit/x86_64-hermit/lib/libhermit.a`).
 ## Proxy
 
 Part of HermitCore is a small helper tool, which is called *proxy*.
-This tool helps to start HermitCore applications within a virtual machine or bare-metal on a NUMA node.
+This tool helps to start HermitCore applications within a virtual machine.
 In principle it is a bridge to the Linux system.
 If the proxy is registered as loader to the Linux system, HermitCore applications can be started like common Linux applications.
 The proxy can be registered with the following command:
@@ -181,6 +181,11 @@ Other than that, it should behave like normal CMake.
 
 By setting the environment variable `HERMIT_VERBOSE` to `1`, the proxy prints
 the kernel log messages to the screen at termination.
+
+## Missing features
+(might be comming)
+* Multikernel support
+* Running baremetal/without hypervisor
 
 ## Credits
 
