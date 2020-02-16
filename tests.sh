@@ -28,6 +28,11 @@ mkdir -p tmp
 dpkg-deb -R build/libhermit-rs-0.3.15-all.deb tmp || exit 1
 rm -rf build/*.deb build/_CPack_Packages
 
+cd loader
+make
+cp target/x86_64-unknown-hermit-loader/debug/rusty-loader /work/build/local_prefix/opt/hermit/bin/hermit-loader
+cd -
+
 TDIR=/work/build/local_prefix/opt/hermit/x86_64-hermit/extra
 FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/thr_hello $TDIR/benchmarks/stream $TDIR/tests/test-malloc"
 PROXY=/work/build/local_prefix/opt/hermit/bin/proxy
