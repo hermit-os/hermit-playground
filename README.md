@@ -90,16 +90,16 @@ $ make install
 **Note:** If you use the cross compiler outside of this repository, it uses the library operating system located
 by the toolchain (e.g. `/opt/hermit/x86_64-hermit/lib/libhermit.a`).
 
-## Proxy
+## Uhyve - A lightweight hypervisor
 
-Part of HermitCore is a small helper tool, which is called *proxy*.
-This tool helps to start HermitCore applications within a virtual machine.
+Part of HermitCore is a small hypervisor, which is called *uhyve*.
+This tool helps to start HermitCore applications within a KVM-accelerated virtual machine.
 In principle it is a bridge to the Linux system.
-If the proxy is registered as loader to the Linux system, HermitCore applications can be started like common Linux applications.
-The proxy can be registered with the following command:
+If the uyhve is registered as loader to the Linux system, HermitCore applications can be started like common Linux applications.
+*uhyve* can be registered with the following command:
 
 ```bash
-$ sudo -c sh 'echo ":hermit:M:7:\\x42::/opt/hermit/bin/proxy:" > /proc/sys/fs/binfmt_misc/register'
+$ sudo -c sh 'echo ":hermit:M:7:\\x42::/opt/hermit/bin/uhyve:" > /proc/sys/fs/binfmt_misc/register'
 ```
 
 Applications can then be directly called like:
@@ -107,12 +107,12 @@ Applications can then be directly called like:
 $ /opt/hermit/x86_64-hermit/extra/tests/hello
 ```
 
-Otherwise, the proxy must be started directly and needs the path to the HermitCore application as an argument:
+Otherwise, *uhyve* must be started directly and needs the path to the HermitCore application as an argument:
 ```bash
-$ /opt/hermit/bin/proxy /opt/hermit/x86_64-hermit/extra/tests/hello
+$ /opt/hermit/bin/uhyve /opt/hermit/x86_64-hermit/extra/tests/hello
 ```
 
-Afterwards, the proxy starts the HermitCore application within a VM (and later bare-metal on a NUMA node)
+Afterwards, the *uhyve* starts the HermitCore application within a VM.
 
 ## Testing
 
@@ -123,12 +123,12 @@ virtual machine:
 $ cd build
 $ make install DESTDIR=~/hermit-build
 $ cd ~/hermit-build/opt/hermit
-$ bin/proxy x86_64-hermit/extra/tests/hello
+$ bin/uhyve x86_64-hermit/extra/tests/hello
 ```
 
 The application will be started within our thin
-hypervisor _uhyve_ powered by Linux's KVM API and therefore requires *KVM* support.
-In principle, it is an extension of [ukvm](https://www.usenix.org/sites/default/files/conference/protected-files/hotcloud16_slides_williams.pdf) and part of our proxy.
+hypervisor powered by Linux's KVM API and therefore requires *KVM* support.
+In principle, it is an extension of [ukvm](https://www.usenix.org/sites/default/files/conference/protected-files/hotcloud16_slides_williams.pdf).
 
 The environment variable `HERMIT_CPUS` specifies the number of
 CPUs (and no longer a range of core ids). Furthermore, the variable `HERMIT_MEM`
@@ -139,7 +139,7 @@ For instance, the following command starts the stream benchmark in a virtual mac
 has 4 cores and 6GB memory:
 
 ```bash
-$ HERMIT_CPUS=4 HERMIT_MEM=6G bin/proxy x86_64-hermit/extra/benchmarks/stream
+$ HERMIT_CPUS=4 HERMIT_MEM=6G bin/uhyve x86_64-hermit/extra/benchmarks/stream
 ```
 
 To enable an Ethernet device for `uhyve`, we have to setup a tap device on the
@@ -162,7 +162,7 @@ For instance, the following command starts an HermitCore application within `uhy
 and enables the network support:
 
 ```bash
-$ HERMIT_ISLE=uhyve HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HERMIT_NETIF=tap100 bin/proxy x86_64-hermit/extra/tests/hello
+$ HERMIT_ISLE=uhyve HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HERMIT_NETIF=tap100 bin/uhyve x86_64-hermit/extra/tests/hello
 ```
 
 ## Building your own HermitCore applications
@@ -177,7 +177,7 @@ Other than that, it should behave like normal CMake.
 
 ### Dumping the kernel log
 
-By setting the environment variable `HERMIT_VERBOSE` to `1`, the proxy prints
+By setting the environment variable `HERMIT_VERBOSE` to `1`, *uhyve* prints
 the kernel log messages to the screen at termination.
 
 ## Missing features
