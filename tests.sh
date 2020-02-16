@@ -30,7 +30,6 @@ rm -rf build/*.deb build/_CPack_Packages
 
 cd loader
 make
-cp target/x86_64-unknown-hermit-loader/debug/rusty-loader /work/build/local_prefix/opt/hermit/bin/hermit-loader
 cd -
 
 TDIR=/work/build/local_prefix/opt/hermit/x86_64-hermit/extra
@@ -38,7 +37,7 @@ FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/thr_
 
 for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m qemu-system-x86_64 -display none -smp 1 -m 64M -serial stdio -kernel /work/loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd $f -cpu qemu64,apic,fsgsbase,rdtscp,xsave,fxsr $f || exit 1; done
 
-for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m qemu-system-x86_64 -display none -smp 2 -m 64M -serial stdio -kernel /work/loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd $f || exit 1; done
+for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m qemu-system-x86_64 -display none -smp 2 -m 64M -serial stdio -kernel /work/loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd $f -cpu qemu64,apic,fsgsbase,rdtscp,xsave,fxsr $f || exit 1; done
 
 # test echo server at port 8000
 #HERMIT_ISLE=qemu HERMIT_CPUS=1 HERMIT_KVM=0 HERMIT_VERBOSE=1 HERMIT_APP_PORT=8000 $PROXY $TDIR/tests/server &
