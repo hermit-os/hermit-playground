@@ -33,7 +33,7 @@ make
 cd -
 
 TDIR=/work/build/local_prefix/opt/hermit/x86_64-hermit/extra
-FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/thr_hello $TDIR/benchmarks/stream"
+FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/thr_hello"
 
 for f in $FILES; do echo "check $f..."; qemu-system-x86_64 -display none -smp 1 -m 1G -serial stdio -kernel /work/loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd $f -cpu qemu64,apic,fsgsbase,rdtscp,xsave,fxsr || exit 1; done
 
