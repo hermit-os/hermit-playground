@@ -162,7 +162,7 @@ For instance, the following command starts an HermitCore application within `uhy
 and enables the network support:
 
 ```bash
-$ HERMIT_ISLE=uhyve HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HERMIT_NETIF=tap100 bin/uhyve x86_64-hermit/extra/tests/hello
+$ HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HERMIT_NETIF=tap100 bin/uhyve x86_64-hermit/extra/tests/hello
 ```
 
 ## Building your own HermitCore applications
