@@ -18,6 +18,7 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
 cargo --version # dump version of the Rust toolchain
 cargo install cargo-xbuild
 rustup component add rust-src
+rustup component add llvm-tools-preview
 mkdir build
 cd build
 cmake ..
