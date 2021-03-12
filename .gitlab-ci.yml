@@ -1,22 +1,36 @@
-variables:
-  IMAGE: ubuntu:hermitcore-with-xbuild
-  GIT_SUBMODULE_STRATEGY: normal
-
 stages:
-  - prepare
-  - build
-  - test
+- prepare
+- build
+- test
 
-# Stage: prepare
-##############################################################################
+variables:
+  DOCKER_FILE: Dockerfile
+  DOCKER_TAG: latest
+  DOCKER_IMAGE: ${CI_REGISTRY_IMAGE}
+  GIT_SUBMODULE_STRATEGY: normal
+  FF_GITLAB_REGISTRY_HELPER_IMAGE: 1
 
-docker:
+.prepare:docker: &prepare_docker
   stage: prepare
+  image:
+    name: quay.io/buildah/stable
+  variables:
+    _BUILDAH_STARTED_IN_USERNS: ""
+    BUILDAH_ISOLATION: chroot
+    BUILDAH_LAYERS: "true"
+  before_script:
+  - buildah version
+  - buildah login --username "${CI_REGISTRY_USER}" --password "${CI_REGISTRY_PASSWORD}" "${CI_REGISTRY}"
   script:
-    - docker build -t ${IMAGE} .
+  - buildah bud -f ${DOCKER_FILE} -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+  - buildah push ${DOCKER_IMAGE}:${DOCKER_TAG} docker://${DOCKER_IMAGE}:${DOCKER_TAG}
+  after_script:
+  - buildah logout "${CI_REGISTRY}"
   tags:
-    - shell
-    - linux
+  - builder
+
+prepare:docker:
+  <<: *prepare_docker
 
 # Stage: build
 ##############################################################################
@@ -28,11 +42,8 @@ build:
     - cd build
     - cmake -DTOOLCHAIN_BIN_DIR=/opt/hermit/bin -DCMAKE_INSTALL_PREFIX=/opt/hermit ..
     - make
-  image: ${IMAGE}
-  tags:
-    - docker
+  image: ${CI_REGISTRY_IMAGE}
   artifacts:
-    expire_in: 1 week
     paths:
       - ./build
 
@@ -47,8 +58,6 @@ test:
     - export PROXY=./local_prefix/opt/hermit/bin/uhyve
     - for f in $FILES; do echo "check $f..."; HERMIT_MEM=128M HERMIT_CPUS=1 HERMIT_VERBOSE=1 timeout --kill-after=5m 5m $PROXY $f || exit 1; done
     - for f in $FILES; do echo "check $f..."; HERMIT_MEM=128M HERMIT_CPUS=2 HERMIT_VERBOSE=1 timeout --kill-after=5m 5m $PROXY $f || exit 1; done
-  image: ${IMAGE}
-  tags:
-    - docker
+  image: ${CI_REGISTRY_IMAGE}
   dependencies:
     - build
