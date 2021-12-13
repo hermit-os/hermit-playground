@@ -169,7 +169,7 @@ $ HERMIT_IP="10.0.5.3" HERMIT_GATEWAY="10.0.5.1" HERMIT_MASK="255.255.255.0" HER
 
 You can take `usr/tests` as a starting point to build your own applications. All
 that is required is that you include
-`[...]/HermitCore/cmake/HermitCore-Application.cmake` in your application's
+`[...]/HermitCore/cmake/HermitCore-Application.cmake` in the first line of your application's
 `CMakeLists.txt`. It doesn't have to reside inside the HermitCore repository.
 Other than that, it should behave like normal CMake.
 
