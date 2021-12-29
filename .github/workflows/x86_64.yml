@@ -24,3 +24,6 @@ jobs:
         cd build
         cmake ..
         make
+    - name: Build loader
+      working-directory: loader
+      make
