@@ -35,5 +35,5 @@ jobs:
       run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/thr_hello
     - name: Run hello++
       run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello++
-    - name: Run jacobi
-      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 1G -serial stdio -kernel loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/jacobi
+    #- name: Run jacobi
+    #  run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 1G -serial stdio -kernel loader/target/x86_64-unknown-hermit-loader/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/jacobi
