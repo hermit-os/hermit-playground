@@ -17,7 +17,7 @@ jobs:
       with:
         submodules: true
     - name: Install qemu
-      run: sudo apt-get update --fix-missing && sudo apt-get install qemu-system-x86
+      run: apt-get update --fix-missing && sudo apt-get install qemu-system-x86
     - name: Build apps
       run: |
         mkdir build
