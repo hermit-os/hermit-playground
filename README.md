@@ -26,19 +26,21 @@ the HermitCore-rs kernel and applications you need:
  * Recent host compiler such as GCC
  * HermitCore cross-toolchain, i.e. Binutils, GCC, newlib, pthreads
  * [Rust compiler (nightly release)](https://www.rust-lang.org/en-US/install.html)
- * [cargo-xbuild](https://github.com/rust-osdev/cargo-xbuild), which can be installed with `cargo install cargo-xbuild`
  * Rust source code for cross-compiling, which can be installed with `rustup component add rust-src`.
 
 ### HermitCore-rs cross-toolchain
 
-We provide prebuilt packages (currently Ubuntu 18.04 only) of the HermitCore-rs
-toolchain. The packages can be installed as follows:
+We provide a Docker container with all required tools to build HermitCore-rs applications.
+
+To test the toolchain, create a simple C program (e.g. `hello world`) and name the file `main.c`.
+Use following command to build the applications:
 
 ```bash
-$ echo "deb [trusted=yes] https://dl.bintray.com/hermitcore/ubuntu bionic main" | sudo tee -a /etc/apt/sources.list
-$ sudo apt-get -qq update
-$ sudo apt-get install binutils-hermit newlib-hermit-rs pte-hermit-rs gcc-hermit-rs libomp-hermit-rs
+$ docker run -v $PWD:/volume -w /volume --rm -t ghcr.io/hermitcore/hermit-toolchain:latest x86_64-hermit-gcc -o main main.c
 ```
+
+The command mounts the current directory as working directory into a docker container and runs the cross-compiler to build the application.
+Afterwards, you will find the executable `main` in your current directory.
 
 If you want to build the toolchain yourself, have a look at the `path2rs` branch of the repository
 [hermit-toolchain](https://github.com/hermitcore/hermit-toolchain).
