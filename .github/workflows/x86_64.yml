@@ -1,0 +1,20 @@
+name: Test x86_64
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - staging
+      - trying
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/hermitcore/hermit-toolchain:latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          lfs: true
+    - name: List working directory
+      run: ls
