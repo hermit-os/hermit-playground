@@ -26,4 +26,4 @@ jobs:
         make
     - name: Build loader
       working-directory: loader
-      make
+      run: make
