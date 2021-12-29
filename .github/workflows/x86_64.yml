@@ -14,7 +14,5 @@ jobs:
     container: ghcr.io/hermitcore/hermit-toolchain:latest
     steps:
     - uses: actions/checkout@v2
-      with:
-          lfs: true
     - name: List working directory
       run: ls
