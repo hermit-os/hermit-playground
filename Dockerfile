@@ -8,7 +8,7 @@ RUN apt-get clean && apt-get -qq update && apt-get install -y apt-transport-http
 # Install Rust toolchain
 #RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
 #RUN /root/.cargo/bin/cargo install cargo-download
-RUN /root/.cargo/bin/cargo install cargo-binutils
+#RUN /root/.cargo/bin/cargo install cargo-binutils
 RUN /root/.cargo/bin/cargo install --git https://github.com/hermitcore/uhyve.git --locked
 #RUN /root/.cargo/bin/rustup component add rust-src
 #RUN /root/.cargo/bin/rustup component add llvm-tools-preview
