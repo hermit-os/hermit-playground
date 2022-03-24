@@ -11,7 +11,7 @@ project (HermitCore)
 add_subdirectory(include/hermit)
 
 # Build the HermitCore Rust Kernel and its dependencies.
-add_subdirectory(librs)
+include(cmake/HermitCore-librs.cmake)
 
 
 if(NOT BOOTSTRAP)
