@@ -53,10 +53,8 @@ It contains scripts to build the whole toolchain for HermitCore-rs.
 As a first step, the repository and its submodules have to be cloned:
 
 ```bash
-$ git clone git@github.com:hermitcore/hermit-playground.git
+$ git clone --recursive https://github.com/hermitcore/hermit-playground.git
 $ cd hermit-playground
-$ git submodule init
-$ git submodule update
 ```
 
 ### Building the library operating systems and its examples
