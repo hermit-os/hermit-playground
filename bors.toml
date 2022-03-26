@@ -1,6 +1,6 @@
 status = [
-  "Test x86_64",
-  "ci/gitlab/git.rwth-aachen.de",
+  "build",
+  "ci/gitlab/staging",
 ]
 delete_merged_branches = true
 timeout_sec = 7200
