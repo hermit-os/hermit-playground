@@ -20,9 +20,6 @@ if(NOT BOOTSTRAP)
 	# Build projects externally and deploy into temporary common prefix, will later
 	# be relocated for installation
 
-	## HermitCore's own tools such as Qemu/KVM proxy
-	build_external(caves ${HERMIT_ROOT}/caves "")
-
 	if(PROFILING)
 		## XRay profiler
 		build_external(xray ${HERMIT_ROOT}/usr/xray "")
