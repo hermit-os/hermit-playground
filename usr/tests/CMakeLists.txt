@@ -25,5 +25,7 @@ add_executable(nweb23 nweb23.c)
 target_compile_options(nweb23 PRIVATE -pthread)
 target_link_libraries(nweb23 pthread)
 
+add_executable(hello-tcp hello-tcp.c)
+
 # deployment
 install_local_targets(extra/tests)
