@@ -49,9 +49,8 @@ test:
     - cd build
     - export TDIR=./local_prefix/opt/hermit/x86_64-hermit/extra
     - export FILES="$TDIR/tests/hello $TDIR/tests/hellof $TDIR/tests/hello++ $TDIR/tests/jacobi $TDIR/tests/thr_hello" #$TDIR/benchmarks/stream" #$TDIR/tests/test-malloc $TDIR/tests/test-malloc-mt"
-    - export PROXY=/root/.cargo/bin/uhyve
-    - for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m $PROXY -v -c 1 -m 128M $f || exit 1; done
-    - for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m $PROXY -v -c 2 -m 128M $f || exit 1; done
+    - for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m uhyve -v -c 1 -m 128M $f || exit 1; done
+    - for f in $FILES; do echo "check $f..."; timeout --kill-after=5m 5m uhyve -v -c 2 -m 128M $f || exit 1; done
   image: ${CI_REGISTRY_IMAGE}
   dependencies:
     - build
