@@ -1,20 +1,39 @@
-FROM ghcr.io/hermitcore/hermit-toolchain:latest
+FROM rust:buster as builder
 
-ENV DEBIAN_FRONTEND=noninteractive
+RUN cargo install --git https://github.com/hermitcore/uhyve.git --locked uhyve
 
-# Update and install required packets from ubuntu repository
-RUN apt-get clean && apt-get -qq update && apt-get install -y apt-transport-https curl wget vim git binutils autoconf automake make cmake qemu-kvm qemu-system-x86 nasm gcc g++ build-essential libtool bsdmainutils libssl-dev python pkg-config lld swig python-dev libncurses5-dev
 
-# Install Rust toolchain
-#RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
-#RUN /root/.cargo/bin/cargo install cargo-download
-#RUN /root/.cargo/bin/cargo install cargo-binutils
-RUN /root/.cargo/bin/cargo install --git https://github.com/hermitcore/uhyve.git --locked uhyve;
-#RUN /root/.cargo/bin/rustup component add rust-src
-#RUN /root/.cargo/bin/rustup component add llvm-tools-preview
+FROM ghcr.io/hermitcore/hermit-toolchain:latest as playground
 
-#ENV PATH="/root/.cargo/bin:/root/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/bin/:${PATH}"
-ENV EDITOR=vim
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        apt-transport-https \
+        autoconf \
+        automake \
+        binutils \
+        bsdmainutils \
+        build-essential \
+        cmake \
+        curl \
+        g++ \
+        gcc \
+        git \
+        libncurses5-dev \
+        libssl-dev \
+        libtool \
+        lld \
+        make \
+        nasm \
+        pkg-config \
+        python \
+        python-dev \
+        qemu-kvm \
+        qemu-system-x86 \
+        swig \
+        vim \
+        wget \
+    ; \
+    rm -rf /var/lib/apt/lists/*;
 
-# Switch back to dialog for any ad-hoc use of apt-get
-ENV DEBIAN_FRONTEND=dialog
+COPY --from=builder $CARGO_HOME/bin/uhyve $CARGO_HOME/bin/uhyve
