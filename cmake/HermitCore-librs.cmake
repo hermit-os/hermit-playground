@@ -4,7 +4,7 @@ add_custom_target(hermit_rs
 	COMMAND
 		cargo run --package=xtask --target-dir ${CMAKE_BINARY_DIR}/hermit_rs --
 		build --arch ${HERMIT_ARCH} --target-dir ${CMAKE_BINARY_DIR}/hermit_rs ${CARGO_BUILDTYPE_PARAMETER}  
-		--no-default-features --features pci,pci-ids,acpi,smp,newlib
+		--no-default-features --features acpi,smp,newlib
 	WORKING_DIRECTORY
 		${CMAKE_CURRENT_LIST_DIR}/../librs)
 
