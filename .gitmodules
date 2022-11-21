@@ -4,6 +4,3 @@
 [submodule "lwip"]
 	path = lwip
 	url = https://github.com/hermitcore/LwIP.git
-[submodule "loader"]
-	path = loader
-	url = https://github.com/hermitcore/rusty-loader.git

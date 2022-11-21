@@ -13,27 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/hermitcore/hermit-toolchain:latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: true
-    - name: Install qemu
-      run: apt-get update --fix-missing && apt-get install -y qemu-system-x86
     - name: Build apps
       run: |
         mkdir build
         cd build
         cmake ..
         make
-    - name: Build loader
-      working-directory: loader
-      run: cargo xtask build --arch x86_64
+    - name: Download loader
+      uses: dsaltares/fetch-gh-release-asset@1.1.0
+      with:
+        repo: hermitcore/rusty-loader
+        file: rusty-loader-x86_64
+    - name: Install QEMU
+      run: |
+        apt-get update
+        apt-get -y install qemu-system-x86
     - name: Run hello
-      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello
+      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello
     - name: Run hellof
-      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hellof
+      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hellof
     - name: Run thr_hello
-      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/thr_hello
+      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/thr_hello
     - name: Run hello++
-      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello++
+      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello++
     #- name: Run jacobi
-    #  run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 1G -serial stdio -kernel loader/target/x86_64/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/jacobi
+    #  run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 1G -serial stdio -kernel rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/jacobi
