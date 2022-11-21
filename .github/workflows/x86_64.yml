@@ -26,7 +26,7 @@ jobs:
         make
     - name: Build loader
       working-directory: loader
-      run: cargo xtask build --arch x86_64
+      run: cargo xtask build --target x86_64
     - name: Run hello
       run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel loader/target/x86_64/debug/rusty-loader -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello
     - name: Run hellof
