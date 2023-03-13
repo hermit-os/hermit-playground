@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 include(../../cmake/HermitCore-Application.cmake)
 
-project(hermit_tests C CXX Fortran Go)
+project(hermit_tests C CXX Fortran)
 
 add_executable(hello hello.c)
 add_executable(jacobi jacobi.c)

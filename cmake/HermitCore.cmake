@@ -5,7 +5,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/HermitCore-Paths.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/HermitCore-Configuration.cmake)
 
 # scripts to detect HermitCore Go compiler
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/golang/)
+#list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/golang/)
 
 if(NOT HERMIT_ARCH)
 	execute_process(COMMAND uname -m OUTPUT_VARIABLE HERMIT_ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -62,7 +62,7 @@ set(HERMIT_KERNEL_INCLUDES
 if(BOOTSTRAP)
 	enable_language(C CXX)
 else()
-	enable_language(C CXX Fortran Go)
+	enable_language(C CXX Fortran)
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/HermitCore-Paths.cmake)

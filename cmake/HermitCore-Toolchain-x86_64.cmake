@@ -30,7 +30,7 @@ set(GC_SECTIONS_FLAG "-Wl,--gc-sections")
 set(CMAKE_C_COMPILER ${TOOLCHAIN_BIN_DIR}/${HERMIT_ARCH}-hermit-gcc ${GC_SECTIONS_FLAG})
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_BIN_DIR}/${HERMIT_ARCH}-hermit-g++ ${GC_SECTIONS_FLAG})
 set(CMAKE_Fortran_COMPILER ${TOOLCHAIN_BIN_DIR}/${HERMIT_ARCH}-hermit-gfortran ${GC_SECTIONS_FLAG})
-set(CMAKE_Go_COMPILER "${TOOLCHAIN_BIN_DIR}/${HERMIT_ARCH}-hermit-gccgo" "${GC_SECTIONS_FLAG}")
+#set(CMAKE_Go_COMPILER "${TOOLCHAIN_BIN_DIR}/${HERMIT_ARCH}-hermit-gccgo" "${GC_SECTIONS_FLAG}")
 
 # Building a HermitCore application won't work before HermitCore is installed in /opt/hermit because of the missing libhermit.a
 # So only try to compile a static library for compiler testing.
