@@ -16,10 +16,10 @@ set(HERMIT_KERNEL_FLAGS
 					-mno-80387 -mno-fp-ret-in-387 -mskip-rax-setup
 					-fno-common -Wframe-larger-than=1024
 					-fno-strict-aliasing -fno-asynchronous-unwind-tables
-					-fno-strict-overflow -maccumulate-outgoing-args)
+					-fno-strict-overflow -maccumulate-outgoing-args -fPIE)
 
 set(HERMIT_APP_FLAGS
-					-m64 -mtls-direct-seg-refs -O3 -ftree-vectorize)
+					-m64 -mtls-direct-seg-refs -O3 -ftree-vectorize -fPIE)
 
 set(CMAKE_SYSTEM_NAME Generic)
 
