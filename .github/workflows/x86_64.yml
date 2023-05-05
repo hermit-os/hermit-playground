@@ -2,11 +2,7 @@ name: Test x86_64
 
 on:
   pull_request:
-  push:
-    branches:
-      - master
-      - staging
-      - trying
+  merge_group:
 
 jobs:
   build:

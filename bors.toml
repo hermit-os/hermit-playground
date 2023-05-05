@@ -1,6 +1,0 @@
-status = [
-  "build",
-  "ci/gitlab/staging",
-]
-delete_merged_branches = true
-timeout_sec = 7200
