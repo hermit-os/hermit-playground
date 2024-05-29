@@ -1,6 +1,6 @@
 [submodule "librs"]
 	path = librs
-	url = https://github.com/hermitcore/libhermit-rs.git
+	url = https://github.com/hermit-os/kernel.git
 [submodule "lwip"]
 	path = lwip
-	url = https://github.com/hermitcore/LwIP.git
+	url = https://github.com/hermit-os/LwIP.git
