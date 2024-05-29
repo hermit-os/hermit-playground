@@ -3,19 +3,19 @@
 
 # HermitCore-rs - A Rust-based, lightweight unikernel for a scalable and predictable runtime behavior
 
-[![Build Status](https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/badges/master/pipeline.svg)](https://git.rwth-aachen.de/acs/public/hermitcore/hermit-playground/pipelines)
+[![Build Status](https://git.rwth-aachen.de/acs/public/hermit-os/hermit-playground/badges/master/pipeline.svg)](https://git.rwth-aachen.de/acs/public/hermit-os/hermit-playground/pipelines)
 [![Slack Status](https://matrix.osbyexample.com:3008/badge.svg)](https://matrix.osbyexample.com:3008)
 
-[HermitCore]( http://www.hermitcore.org ) is a new
+[HermitCore]( http://www.hermit-os.org ) is a new
 [unikernel](http://unikernel.org) targeting a scalable and predictable runtime
 for high-performance and cloud computing.
 We decided to develop a new version of the kernel in [Rust](https://www.rust-lang.org) .
 We promise that this will make it easier to maintain and extend our kernel.
 All code beside the kernel can still be developed in your preferred language (C/C++/Go/Fortran).
-If you want to develope pure Rust applications, please look into [RustyHermit](https://github.com/hermitcore/libhermit-rs).
+If you want to develope pure Rust applications, please look into [RustyHermit](https://github.com/hermit-os/libhermit-rs).
 
 This repository contains the Rust-based playground for C/C++/Go/Fortran applications.
-Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermitcore/libhermit) and runs only in our own hypervisor.
+Currently, it isn't stable and does not support all features of the [C-based version](https://github.com/hermit-os/libhermit) and runs only in our own hypervisor.
 
 ## Requirements
 
@@ -36,14 +36,14 @@ To test the toolchain, create a simple C program (e.g. `hello world`) and name t
 Use following command to build the applications:
 
 ```bash
-$ docker run -v $PWD:/volume -w /volume --rm -t ghcr.io/hermitcore/hermit-toolchain:latest x86_64-hermit-gcc -o main main.c
+$ docker run -v $PWD:/volume -w /volume --rm -t ghcr.io/hermit-os/hermit-toolchain:latest x86_64-hermit-gcc -o main main.c
 ```
 
 The command mounts the current directory as working directory into a docker container and runs the cross-compiler to build the application.
 Afterwards, you will find the executable `main` in your current directory.
 
 If you want to build the toolchain yourself, have a look at the `path2rs` branch of the repository
-[hermit-toolchain](https://github.com/hermitcore/hermit-toolchain).
+[hermit-toolchain](https://github.com/hermit-os/hermit-toolchain).
 It contains scripts to build the whole toolchain for HermitCore-rs.
 
 ## Building
@@ -53,7 +53,7 @@ It contains scripts to build the whole toolchain for HermitCore-rs.
 As a first step, the repository and its submodules have to be cloned:
 
 ```bash
-$ git clone --recursive https://github.com/hermitcore/hermit-playground.git
+$ git clone --recursive https://github.com/hermit-os/hermit-playground.git
 $ cd hermit-playground
 ```
 
@@ -202,5 +202,5 @@ at your option.
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
 
-HermitCore-rs is being developed on [GitHub](https://github.com/hermitcore/hermit-playground	).
+HermitCore-rs is being developed on [GitHub](https://github.com/hermit-os/hermit-playground	).
 Create your own fork, send us a pull request, and chat with us on [Slack](https://radiant-ridge-95061.herokuapp.com)
