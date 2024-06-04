@@ -61,8 +61,7 @@ typedef struct _HermitItimerval HermitItimerval;
 struct _HermitRecursiveMutex;
 typedef struct _HermitRecursiveMutex HermitRecursiveMutex;
 
-struct _HermitSemaphore;
-typedef struct _HermitSemaphore HermitSemaphore;
+typedef void* HermitSemaphore;
 
 struct _HermitSpinlock;
 typedef struct _HermitSpinlock HermitSpinlock;
@@ -118,7 +117,7 @@ int sys_recmutex_init(HermitRecursiveMutex** recmutex);
 int sys_recmutex_destroy(HermitRecursiveMutex* recmutex);
 int sys_recmutex_lock(HermitRecursiveMutex* recmutex);
 int sys_recmutex_unlock(HermitRecursiveMutex* recmutex);
-int sys_sem_init(HermitSemaphore** sem, unsigned int value);
+int sys_sem_init(HermitSemaphore* sem, unsigned int pshared, unsigned int value);
 int sys_sem_destroy(HermitSemaphore* sem);
 int sys_sem_post(HermitSemaphore* sem);
 int sys_sem_trywait(HermitSemaphore* sem);
