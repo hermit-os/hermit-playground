@@ -11,6 +11,6 @@
 #ifndef __NETINET_TCP_H__
 #define __NETINET_TCP_H__
 
-#include <lwip/tcp.h>
+#include <tcp.h>
 
 #endif /* __NETINET_TCP_H__ */
