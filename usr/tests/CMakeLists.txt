@@ -6,7 +6,7 @@ project(hermit_tests C CXX Fortran)
 add_executable(hello hello.c)
 add_executable(jacobi jacobi.c)
 add_executable(hello++ hello++.cpp)
-add_executable(hellof hellof.f90)
+#add_executable(hellof hellof.f90) Temporarily removing Fortran support
 #add_executable(pi pi.go)
 
 add_executable(test-malloc test-malloc.c)
