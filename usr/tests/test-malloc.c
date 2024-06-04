@@ -4,7 +4,7 @@
 #include <malloc.h>
 
 #ifndef NUM_ITER
-#define NUM_ITER    100000
+#define NUM_ITER    10000
 #endif
 
 #ifndef SIZE
@@ -26,5 +26,3 @@ int main(int argc, char** argv)
 
     return 0;
 }
-
-

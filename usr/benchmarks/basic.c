@@ -101,16 +101,15 @@ int main(int argc, char** argv)
 	printf("Average time for sched_yield: %lld cycles\n", (end - start) / N);
 
 	sum = 0;
-	for(i=0; i<10000; i++) {
-		start = rdtsc();
+	start = rdtsc();
+	for(i=0; i<10000; i++) {	
 		pthread_create(&thr_handle, NULL, thread_func, NULL);
 		sched_yield();
 		pthread_join(thr_handle, (void**)&start);
-		sum += rdtsc() - start;
-
 	}
+	end = rdtsc();
 
-	printf("Average time to create a thread: %lld cycles\n", sum / 10000);
+	printf("Average time to create a thread: %lld cycles\n", (end - start) / 10000);
 
 #if 0
 	write(2, (const void *)str, len);

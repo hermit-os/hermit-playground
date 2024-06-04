@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <string.h>
 
 int main() {
     const int sfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -33,7 +34,7 @@ int main() {
     puts("listening for incoming connections");
 
     for (;;) {
-        puts("awaitening connections");
+        puts("awaiting connections");
         struct sockaddr_in address;
         socklen_t addr_len = sizeof(address);
         int cfd;
