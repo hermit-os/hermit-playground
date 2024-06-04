@@ -6,13 +6,13 @@
 // copied, modified, or distributed except according to those terms.
 
 ///////////////////////////////////////
-//// HERMITCORE RUST-SPECIFIC CODE ////
+//// HERMIT-OS RUST-SPECIFIC CODE ////
 
 #include <hermit/syscall.h>
 
 inline static void create_second_task(void (*entry_point)(void*))
 {
-	sys_spawn(NULL, entry_point, NULL, HIGH_PRIO, 0);
+	sys_spawn(NULL, entry_point, NULL, NORMAL_PRIO, 0);
 }
 
 inline static void consume_task_time(void)

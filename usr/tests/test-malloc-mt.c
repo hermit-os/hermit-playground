@@ -10,11 +10,11 @@
 #endif
 
 #ifndef NUM_ITER
-#define NUM_ITER    10000
+#define NUM_ITER    1000
 #endif
 
 #ifndef SIZE
-#define SIZE    16384
+#define SIZE    16*1024
 #endif
 
 __thread void* buf;

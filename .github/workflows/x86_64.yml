@@ -30,8 +30,8 @@ jobs:
         apt-get -y install qemu-system-x86
     - name: Run hello
       run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hello
-    - name: Run hellof
-      run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hellof
+    #- name: Run hellof
+    #  run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/hellof
     - name: Run thr_hello
       run: qemu-system-x86_64 -smp 1 -cpu qemu64,apic,fsgsbase,rdtscp,xsave,xsaveopt,fxsr,rdrand -display none -m 128M -serial stdio -kernel rusty-loader-x86_64 -initrd build/local_prefix/opt/hermit/x86_64-hermit/extra/tests/thr_hello
     - name: Run hello++

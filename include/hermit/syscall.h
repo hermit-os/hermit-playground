@@ -61,8 +61,7 @@ typedef struct _HermitItimerval HermitItimerval;
 struct _HermitRecursiveMutex;
 typedef struct _HermitRecursiveMutex HermitRecursiveMutex;
 
-struct _HermitSemaphore;
-typedef struct _HermitSemaphore HermitSemaphore;
+typedef void* HermitSemaphore;
 
 struct _HermitSpinlock;
 typedef struct _HermitSpinlock HermitSpinlock;
@@ -108,9 +107,6 @@ int sys_close(int fd);
 void sys_acquire_putchar_lock(void);
 void sys_putchar(const unsigned char character);
 void sys_release_putchar_lock(void);
-int sys_lwip_get_errno();
-void sys_lwip_register_tcpip_task(tid_t id);
-void sys_lwip_set_errno(int errno);
 void sys_usleep(unsigned long usecs);
 int sys_nanosleep(const HermitTimespec* rqtp, HermitTimespec* rmtp);
 void sys_msleep(unsigned int ms);
@@ -118,7 +114,7 @@ int sys_recmutex_init(HermitRecursiveMutex** recmutex);
 int sys_recmutex_destroy(HermitRecursiveMutex* recmutex);
 int sys_recmutex_lock(HermitRecursiveMutex* recmutex);
 int sys_recmutex_unlock(HermitRecursiveMutex* recmutex);
-int sys_sem_init(HermitSemaphore** sem, unsigned int value);
+int sys_sem_init(HermitSemaphore* sem, unsigned int pshared, unsigned int value);
 int sys_sem_destroy(HermitSemaphore* sem);
 int sys_sem_post(HermitSemaphore* sem);
 int sys_sem_trywait(HermitSemaphore* sem);
