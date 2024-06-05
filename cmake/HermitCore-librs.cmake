@@ -34,13 +34,13 @@ add_custom_target(hermit_rs-install
 		hermit_rs
 	COMMAND
 		${CMAKE_COMMAND}
-			-DCMAKE_INSTALL_COMPONENT=hermit_rs
+			-DCMAKE_INSTALL_COMPONENT=bootstrap
 			-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 			-P cmake_install.cmake
 )
 
 # Install libhermit.a and headers
-install(FILES ${HERMIT_RS}
+install(FILES ${CMAKE_BINARY_DIR}/hermit_rs/${HERMIT_ARCH}/release/libhermit.a
 		DESTINATION ${HERMIT_ARCH}-hermit/lib
 		COMPONENT bootstrap)
 	
